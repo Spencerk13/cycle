@@ -59,6 +59,6 @@ https://github.com/electronstudio/raylib-python-cffi/blob/master/BUILDING.rst
 
 ## Authors
 ---
-* Spencer Kingsbury
-* Samuel Casellas
-* James Chan
+* Spencer Kingsbury kin20013@byui.edu
+* Samuel Casellas cas18010@byui.edu
+* James Chan cha20009@byui.edu
