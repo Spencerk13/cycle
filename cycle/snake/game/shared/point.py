@@ -18,26 +18,17 @@ class Point:
         """
         self._x = x
         self._y = y
+
     def __add__(self,other):
-        x = self._x + other.get_x()
-        y = self._y + other.get_y()
-        return Point(x, y)
-    def add(self, other):
-        """Gets a new point that is the sum of this and the given one.
-
+        """Add positions of current point and another point and returns the sum.
         Args:
-            other (Point): The Point to add.
-
-        Returns:
-            Point: A new Point that is the sum.
+        other: another point
         """
         x = self._x + other.get_x()
         y = self._y + other.get_y()
         return Point(x, y)
-    def __eq__(self,other):
-        return self._x == other.get_x() and self._y == other.get_y()
 
-    def equals(self, other):
+    def __eq__(self,other):
         """Whether or not this Point is equal to the given one.
 
         Args:
@@ -73,16 +64,6 @@ class Point:
         new_x = self._x * -1
         new_y = self._y * -1
         return Point(new_x, new_y)
-    def __scale__(self,factor):
-        return Point(self._x * factor, self._y * factor)       
-    def scale(self, factor):
-        """
-        Scales the point by the provided factor.
 
-        Args:
-            factor (int): The amount to scale.
-            
-        Returns:
-            Point: A new Point that is scaled.
-        """
-        return Point(self._x * factor, self._y * factor)
+    def __mul__(self,factor):
+        return Point(self._x * factor, self._y * factor) 

@@ -5,12 +5,17 @@ from game.shared.point import Point
 
 class ControlActorsAction(Action):
     """
+    INHERITS ACTION, ONE INSTANCE OF POLYMORPHISM
+
     An input action that controls the snake.
     
     The responsibility of ControlActorsAction is to get the direction and move the snake's head.
 
     Attributes:
         _keyboard_service (KeyboardService): An instance of KeyboardService.
+        _directionp1: direction of snake 1 (default going right)
+        _directionp2: direction of snake 2 (default going right)
+        
     """
 
     def __init__(self, keyboard_service):
@@ -20,10 +25,10 @@ class ControlActorsAction(Action):
             keyboard_service (KeyboardService): An instance of KeyboardService.
         """
         self._keyboard_service = keyboard_service
-        self._direction = Point(constants.CELL_SIZE, 0)
+        self._directionp1 = Point(constants.CELL_SIZE, 0)
         self._directionp2 = Point(constants.CELL_SIZE, 0)
 
-    def execute(self, cast, script):
+    def execute(self, cast, script): # Polymorphism
         """Executes the control actors action.
 
         Args:
@@ -32,22 +37,22 @@ class ControlActorsAction(Action):
         """
         # left
         if self._keyboard_service.is_key_down('a'):
-            self._direction = Point(-constants.CELL_SIZE, 0)
+            self._directionp1 = Point(-constants.CELL_SIZE, 0)
         
         # right
         if self._keyboard_service.is_key_down('d'):
-            self._direction = Point(constants.CELL_SIZE, 0)
+            self._directionp1 = Point(constants.CELL_SIZE, 0)
         
         # up
         if self._keyboard_service.is_key_down('w'):
-            self._direction = Point(0, -constants.CELL_SIZE)
+            self._directionp1 = Point(0, -constants.CELL_SIZE)
         
         # down
         if self._keyboard_service.is_key_down('s'):
-            self._direction = Point(0, constants.CELL_SIZE)
+            self._directionp1 = Point(0, constants.CELL_SIZE)
         
-        snake = cast.get_first_actor("snakes")
-        snake.turn_head(self._direction)
+        player1 = cast.get_first_actor("p1")
+        player1.turn_head(self._directionp1)
 
         if self._keyboard_service.is_key_down('j'):
             self._directionp2 = Point(-constants.CELL_SIZE, 0)
