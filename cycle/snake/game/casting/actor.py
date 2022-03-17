@@ -1,4 +1,5 @@
 import constants
+import pyray
 from game.shared.color import Color
 from game.shared.point import Point
 
@@ -77,6 +78,13 @@ class Actor:
         y = (self._position.get_y() + self._velocity.get_y()) % constants.MAX_Y
         self._position = Point(x, y)
 
+    def create_rect(self,object):
+            """Create a hitbox for the snakes and food.
+            Args:
+            object: an acotor or part of an actor
+            """
+            return pyray.Rectangle(object.get_position().get_x(),object.get_position().get_y(),10,10)
+
     def set_color(self, color):
         """Updates the color to the given one.
         
@@ -116,5 +124,6 @@ class Actor:
             velocity (Point): The given velocity.
         """
         self._velocity = velocity
+        
     def grow_tail(self):
         pass

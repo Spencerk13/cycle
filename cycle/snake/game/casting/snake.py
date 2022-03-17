@@ -1,13 +1,12 @@
-from decimal import MAX_EMAX
 import constants
 import random
 from game.casting.actor import Actor
 from game.shared.point import Point
-from game.casting.cast import Cast
-import pyray
 
 class Snake(Actor):
     """
+    INHERITS ACTOR, TWO INSTANCES OF POLYMORPHISM
+
     A long limbless reptile.
     
     The responsibility of Snake is to move itself.
@@ -15,15 +14,22 @@ class Snake(Actor):
     Attributes:
         _points (int): The number of points the food is worth.
     """
-    def __init__(self):
+    def __init__(self, color):
+        """Create an instance of a snake.
+        Parameters:
+        color: the color of the snake
+        """
         super().__init__()
         self._segments = []
+        self._color = color
         self._prepare_body()
 
     def get_segments(self):
+        """Get all of the segments of the snake in a list."""
         return self._segments
 
-    def move_next(self):
+    def move_next(self): # Polymorphism
+        """Move each individual segment of snake and update their velocities."""
         # move all segments
         for segment in self._segments:
             segment.move_next()
@@ -35,30 +41,36 @@ class Snake(Actor):
             trailing.set_velocity(velocity)
 
     def get_head(self):
+        """Return the segment comprising the head."""
         return self._segments[0]
 
-    def grow_tail(self):
-        if constants.SNAKE_LENGTH < 150:
+    def grow_tail(self): # Polymorphism
+        """Make snake grow up to 150 segments long"""
+        if constants.SNAKE_LENGTH <= 150:
             tail = self._segments[-1]
             velocity = tail.get_velocity()
             offset = velocity.reverse()
-            position = tail.get_position().add(offset)
+            position = tail.get_position() + offset
             
             segment = Actor()
             segment.set_position(position)
             segment.set_velocity(velocity)
             segment.set_text("#")
-            segment.set_color(constants.GREEN)
+            eval(f"segment.set_color(constants.{self._color})")
             self._segments.append(segment)
             constants.SNAKE_LENGTH+=1
 
     def turn_head(self, velocity):
+        """Change direction
+        Args:
+        velocity: the direction of the snake.
+        """
         self._segments[0].set_velocity(velocity)
 
-    def create_rect(self,object):
-        return pyray.Rectangle(object.get_position().get_x(),object.get_position().get_y(),10,10)
-
     def _prepare_body(self):
+        """
+        Create the snake with its position, color, velocity, and graphics.
+        """
         x = random.randint(0,900)
         y = random.randint(0,600)
 
@@ -66,7 +78,7 @@ class Snake(Actor):
             position = Point(x - i * constants.CELL_SIZE, y)
             velocity = Point(1 * constants.CELL_SIZE, 0)
             text = "8" if i == 0 else "#"
-            color = constants.YELLOW if i == 0 else constants.GREEN
+            color = eval(f"constants.YELLOW if i == 0 else constants.{self._color}")
             
             segment = Actor()
             segment.set_position(position)

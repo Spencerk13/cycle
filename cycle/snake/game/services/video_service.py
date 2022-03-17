@@ -86,7 +86,3 @@ class VideoService:
             
         for x in range(0, constants.MAX_X, constants.CELL_SIZE):
             pyray.draw_line(x, 0, x, constants.MAX_Y, pyray.GRAY)
-    
-    def _get_x_offset(self, text, font_size):
-        width = pyray.measure_text(text, font_size)
-        return int(width / 2)
